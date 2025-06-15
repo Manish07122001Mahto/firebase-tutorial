@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { app } from "../../firebase.js";
-
-const auth = getAuth(app);
+import { useFirebase } from "../context/firebaseContext.jsx";
 
 function Signup() {
+  const firebase = useFirebase();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const createUser = () => {
-    createUserWithEmailAndPassword(auth, email, password).then((value) =>
-      alert("Success")
-    );
-  };
-
   return (
     <div className="signup-page">
       <h1>Signup Page</h1>
@@ -37,7 +28,14 @@ function Signup() {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
-      <button onClick={createUser}>Signup</button>
+      <button
+        onClick={() => {
+          firebase.signup(email, password);
+          firebase.putData("users/" + "manishmahto", { email, password });
+        }}
+      >
+        Signup
+      </button>
     </div>
   );
 }

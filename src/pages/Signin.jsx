@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "../../firebase.js";
-
-const auth = getAuth(app);
+import { useFirebase } from "../context/firebaseContext.jsx";
 
 function Signin() {
+  const firebase = useFirebase();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const signinUser = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((value) => console.log("Signin Success"))
-      .catch((err) => console.log(err));
-  };
   return (
     <div className="signin-page">
       <h1>Signin Page</h1>
@@ -36,7 +28,7 @@ function Signin() {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
-      <button onClick={signinUser}>Signin me in</button>
+      <button onClick={() => firebase.signin(email, password)}>Signin</button>
     </div>
   );
 }

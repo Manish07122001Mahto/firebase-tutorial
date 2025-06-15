@@ -11,4 +11,4 @@ const firebaseConfig = {
   databaseURL: "https://tutorial-2025-default-rtdb.firebaseio.com/",
 };
 
-export const app = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
